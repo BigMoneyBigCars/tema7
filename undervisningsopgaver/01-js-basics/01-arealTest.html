@@ -14,23 +14,28 @@
 
     <script>
         let length = 4;
-        let width = 50;
+        let width = 5;
 
         let areal = length * width;
+        let resultat;
 
-
-        let resultat = `the length of the room is ${length}, the width of the room is ${width}, and the areal of the room is ${areal}`;
-        console.log(resultat);
+        /*   let resultat = `the length of the room is ${length}, the width of the room is ${width}, and the areal of the room is ${areal}`;
+           console.log(resultat);*/
 
 
 
 
         if (areal < 100) {
-            console.log("arealet er for lille");
+
+            resultat = ("arealet er for lille");
+            /*     console.log("arealet er for lille");*/
         } else if (areal > 100 && areal < 200) {
-            console.log("arealet er ok");
+            resultat = ("arealet er ok");
+            /* console.log("arealet er ok");*/
         } else if (areal >= 200) {
-            console.log("arealet er for stort");
+            resultat = ("arealet er for stort");
+            /* console.log("arealet er for stort");*/
         }
+        console.log(resultat);
     </script>
 </body></html>
