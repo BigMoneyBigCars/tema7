@@ -29,6 +29,9 @@
 
 
 <body>
+    <div id="info">
+
+    </div>
 
     <div class="firkant"></div>
 
@@ -38,6 +41,12 @@
 
 
     <script>
+        let h1 = document.createElement("h1");
+
+        let overskrift = document.createTextNode("En frø gris og ræv");
+        info.appendChild(overskrift);
+
+
         let firkantURL = `http://mabe-kea.dk/E19/pics/frog.png`;
         let cirkelURL = `http://mabe-kea.dk/E19/pics/pig.png`;
         let foxURL = `http://mabe-kea.dk/E19/pics/fox.png`;
