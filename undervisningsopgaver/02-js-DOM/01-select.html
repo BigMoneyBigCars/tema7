@@ -9,11 +9,12 @@
 
 <body>
 
+
     <div id="content">
 
-        <div><a href="https://kea.dk/">https://kea.dk/</a></div>
+        <div><a href="https://kea.dk/"></a></div>
         <div><a href="https://github.com/">Github</a> </div>
-        <div><a href="http://mabe-kea.dk/E19/pics/frog.png">Frø billede</a></div>
+        <div><img src="http://mabe-kea.dk/E19/pics/frog.png" alt="billede af frø"></div>
 
     </div>
 
@@ -23,7 +24,15 @@
 <script>
     document.querySelector("#content");
 
-    console.log(document.querySelector("#content"));
-    console.log(document.querySelector("#content div"));
-    console.log(document.querySelector("#content div + div"));
+    const content = (document.querySelector("#content"));
+    const første = (document.querySelector("#content div a"));
+    const anden = (document.querySelector("#content div:nth-child(2)"));
+    const sidste = (document.querySelector("#content img"));
+
+    content.innerHTML += "<h1>link til keas hjemmeside</h1>";
+
+    console.log(content);
+    console.log(første);
+    console.log(anden);
+    console.log(sidste);
 </script></html>
