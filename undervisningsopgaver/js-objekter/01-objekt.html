@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="person">
+        <article>
+
+            <h1>
+
+            </h1>
+
+            <p class="email"></p>
+            <img src="" alt="">
+        </article>
+    </div>
+
+
+    <script>
+        let person = {
+            "fornavn": "Henrik",
+            "efternavn": "larsen",
+            "email": "henriklarsen@gmail.com",
+            "billede": "http://mabe-kea.dk/E19/pics/frog.png"
+        }
+
+
+
+        console.log(person.fornavn);
+        console.log(person.efternavn);
+        console.log(person.email);
+
+
+
+        let tekst = "mit fornavn er " + person.fornavn + " og mit efternavn er " + person.efternavn;
+        let tekst2 = `mit fornavn er: ${person.fornavn} og mit efternavn er${person.efternavn}`;
+
+
+        console.log(tekst);
+        console.log(tekst2);
+
+
+        const navneContainer = document.querySelector("h1");
+        const emailContainer = document.querySelector("p");
+        const billedeContainer = document.querySelector("img").src = person.billede;
+
+
+        navneContainer.textContent = `${person.fornavn} ${person.efternavn}`;
+        emailContainer.textContent = `${person.email}`;
+        billedeContainer.innerHTML = `${person.billede}`;
+
+        /*        let navn = `${henrik.fornavn} ${larsen.efternavn}`;
+
+                let navn = henrik.fornavn + ”“ +larsen.efternavn;
+
+
+
+                let email = `${henriklarsen@gmail.com.email};
+
+            let email = henriklarsen@gmail.com.email ;
+         */
+    </script>
+
+    <!--
+    let navn = `${henrik.fornavn} ${larsen.efternavn}`;
+
+    let navn = henrik.fornavn+” “+ larsen.efternavn;
+
+
+
+    let email = `${henriklarsen@gmail.com.email};
+
+    let navn = henriklarsen@gmail.com.email ;
+
+
+-->
+
+</body></html>
