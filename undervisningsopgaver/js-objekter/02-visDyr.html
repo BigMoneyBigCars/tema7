@@ -37,17 +37,17 @@
 
         const h1Container = document.querySelector("h1");
         const billedeContainer = document.querySelector("img").src = person.billede;
+        let tekst2 = `Dyr: ${person.dyr} type: ${person.type} levested: ${person.levested}`;
 
+        console.log(tekst2);
 
-        h1Container.innerHTML = `Dyr: ${person.dyr} type: ${person.type} levested: ${person.levested}`;
+        h1Container.innerHTML = tekst2;
         billedeContainer.innerHTML = `${person.billede}`;
 
 
 
         /* let tekst = "mit fornavn er " + person.fornavn + " og mit efternavn er " + person.efternavn;*/
-        let tekst2 = `Dyr: ${person.dyr} type: ${person.type} levested: ${person.levested}`;
 
-        console.log(tekst2);
 
         /*
                 console.log(tekst);
