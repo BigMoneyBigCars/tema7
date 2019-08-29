@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Document</title>
+</head>
+
+<body>
+
+    <article>
+        <h1></h1>
+
+        <img src="" alt="">
+        <p></p>
+        <p></p>
+    </article>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            console.log("Dom er loaded");
+        }
+
+        let person = {
+            "dyr": "gris",
+            "type": "pattedyr",
+            "levested": "svinefarm",
+            "billede": "http://mabe-kea.dk/E19/pics/pig.png"
+        }
+
+        console.log(person.dyr);
+        console.log(person.type);
+        console.log(person.levested);
+        console.log(person);
+
+
+        const h1Container = document.querySelector("h1");
+        const billedeContainer = document.querySelector("img").src = person.billede;
+        const foerstePContainer = document.querySelector("p");
+        const andenPContainer = document.querySelector("p+p");
+
+
+        let tesktH1 = ` ${person.dyr}`;
+
+
+
+
+
+        h1Container.innerHTML = tesktH1;
+        billedeContainer.innerHTML = `${person.billede}`;
+        foerstePContainer.innerHTML = ` type: ${person.type}`
+        andenPContainer.innerHTML = ` levested: ${person.levested}`
+
+
+
+        /* let tekst = "mit fornavn er " + person.fornavn + " og mit efternavn er " + person.efternavn;*/
+
+
+        /*
+                console.log(tekst);
+                console.log(tekst2);
+
+
+                const navneContainer = document.querySelector("h1");
+
+                const emailContainer = document.querySelector("p");
+                const billedeContainer = document.querySelector("img").src = person.billede;
+
+
+                navneContainer.textContent = `${person.fornavn} ${person.efternavn}`;
+                emailContainer.textContent = `${person.email}`;
+                billedeContainer.innerHTML = `${person.billede}`;
+        */
+
+        /*        let navn = `${henrik.fornavn} ${larsen.efternavn}`;
+
+                let navn = henrik.fornavn + ”“ +larsen.efternavn;
+
+
+
+                let email = `${henriklarsen@gmail.com.email};
+
+            let email = henriklarsen@gmail.com.email ;
+         */
+    </script>
+
+    <!--
+    let navn = `${henrik.fornavn} ${larsen.efternavn}`;
+
+    let navn = henrik.fornavn+” “+ larsen.efternavn;
+
+
+
+    let email = `${henriklarsen@gmail.com.email};
+
+    let navn = henriklarsen@gmail.com.email ;
+
+
+-->
+
+</body></html>
