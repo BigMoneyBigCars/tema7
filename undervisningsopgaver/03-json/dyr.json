@@ -1,0 +1,40 @@
+ [{
+                "navn": "frø",
+                "type": "frø for fanden",
+                "levested": "sumpen",
+                "billede": "http://mabe-kea.dk/E19/pics/frog.png"
+
+            },
+            {
+                "navn": "ræv",
+                "type": "pattedyr",
+                "levested": "haven",
+                "billede": "http://mabe-kea.dk/E19/pics/fox.png"
+
+
+            },
+            {
+                "navn": "gris",
+                "type": "pattedyr",
+                "levested": "gården",
+                "billede": "http://mabe-kea.dk/E19/pics/pig.png"
+
+
+            },
+            {
+                "navn": "sild",
+                "type": "fredagsbarer",
+                "levested": "motel",
+                "billede": "http://mabe-kea.dk/E19/pics/sild.jpg"
+
+
+            },
+            {
+                "navn": "krokodille",
+                "type": "reptillo",
+                "levested": "florida",
+                "billede": "http://mabe-kea.dk/E19/pics/kroko.jpg"
+
+
+            }
+        ]

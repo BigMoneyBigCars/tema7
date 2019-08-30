@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <style>
+        img {
+            width: 30%;
+
+        }
+
+        .data-container {
+            text-align: center;
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: repeat(5, 1fr);
+            max-width: 960px;
+            margin: 0 auto;
+
+
+        }
+
+        article {
+            border: 1px solid black
+        }
+
+
+        article:nth-child(even) {
+
+            background: #777272;
+        }
+
+        article:nth-child(odd) {
+
+            background: #9b9a9a;
+        }
+
+        @media screen and (max-width:600px) {
+            .data-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="data-container"></section>
+    <template>
+
+        <article>
+            <h1></h1>
+            <img src="" alt="">
+            <p></p>
+            <p></p>
+        </article>
+
+
+    </template>
+
+
+    <script>
+        let dyrene;
+
+        document.addEventListener("DOMContentLoaded", getJson);
+
+        async function getJson() {
+
+            console.log("Dom Virker flot");
+
+            let jsonData = await fetch("dyr.json");
+
+            console.log("jsonData", jsonData);
+
+            dyrene = await jsonData.json();
+
+            console.log("dyrene", dyrene);
+
+            visDyr();
+
+
+        }
+
+
+        function visDyr() {
+
+            const container = document.querySelector(".data-container");
+            const temp = document.querySelector("template");
+
+
+            dyrene.forEach(dyr => {
+                const klon = temp.cloneNode(true).content;
+                klon.querySelector("h1").textContent = dyr.navn;
+                klon.querySelector("img").src = dyr.billede;
+                klon.querySelector("p").textContent = dyr.type;
+                klon.querySelector("p+p").textContent = dyr.levested;
+                container.appendChild(klon);
+            })
+        }
+
+
+
+
+
+
+
+
+
+        /*  function start() {
+              console.log("Dom er loaded");
+
+              async function hentJson() {
+                  let myJson = await fetch("dyr.json");
+                  dyr = await myJson.json();
+                  visDyr();
+              }
+
+
+              function visDyr() {
+
+                  const container = document.querySelector(".data-container");
+                  const dyrTemplate = document.querySelector("template");
+
+                  dyr.forEach(dyrene => {
+                      let klon = dyrTemplate.cloneNode(true).content;
+                      klon.querySelector("h1").textContent = dyrene.navn;
+                      klon.querySelector("img").src = dyrene.billede;
+                      klon.querySelector("p").textContent = dyrene.type;
+                      klon.querySelector("p+p").textContent = dyrene.levested;
+                      container.appendChild(klon);
+
+                  })
+              }
+
+          }*/
+    </script>
+
+</body></html>
