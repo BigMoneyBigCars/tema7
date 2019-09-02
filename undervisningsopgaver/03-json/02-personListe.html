@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <style>
+        img {
+            width: 30%;
+            max-height: 200px;
+
+        }
+
+        .data-container {
+            text-align: center;
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: repeat(1, 1fr);
+            margin: 0 auto;
+
+
+        }
+
+        article {
+            border: 1px solid #8d8c8c;
+
+        }
+
+        a {
+            color: black;
+            font-size: 20px;
+        }
+
+
+        article:nth-child(even) {
+
+            background: #edcfcf;
+        }
+
+        article:nth-child(odd) {
+
+            background: #b3b2b9;
+        }
+
+        @media screen and (min-width:600px) {
+            .data-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+
+        }
+
+        @media screen and (min-width:960px) {
+            .data-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="data-container"></section>
+    <template>
+
+        <article>
+            <h2></h2>
+            <img src="" alt="">
+            <p><a class="gitHub" target="_blank" a href=""></a></p>
+        </article>
+
+
+    </template>
+
+
+    <script>
+        let dyrene;
+
+        const filter = "k";
+
+
+        document.addEventListener("DOMContentLoaded", getJson);
+
+        async function getJson() {
+
+            console.log("Dom Virker flot");
+
+            let jsonData = await fetch("https://spreadsheets.google.com/feeds/list/1Xge7slZ9dEOTCn1Yxl3OE4xgvrXOL8Y_iu3WN1yGB1U/od6/public/values?alt=json");
+
+            console.log("jsonData", jsonData);
+
+            dyrene = await jsonData.json();
+
+            console.log("dyrene", dyrene);
+
+            visDyr();
+
+
+        }
+
+
+        function visDyr() {
+
+            const container = document.querySelector(".data-container");
+            const temp = document.querySelector("template");
+
+
+            dyrene.feed.entry.forEach((person) => {
+
+                if (person.gsx$køn.$t == filter) {
+                    const klon = temp.cloneNode(true).content;
+                    klon.querySelector("h2").textContent = person.gsx$navn.$t;
+                    klon.querySelector("img").src = person.gsx$billede.$t;
+                    klon.querySelector(".gitHub").textContent = person.gsx$github.$t;
+                    klon.querySelector(".gitHub").href = `https://www.github.com/${person.gsx$github.$t}`;
+                    container.appendChild(klon);
+                }
+            })
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+        /*  function start() {
+              console.log("Dom er loaded");
+
+              async function hentJson() {
+                  let myJson = await fetch("dyr.json");
+                  dyr = await myJson.json();
+                  visDyr();
+              }
+
+
+              function visDyr() {
+
+                  const container = document.querySelector(".data-container");
+                  const dyrTemplate = document.querySelector("template");
+
+                  dyr.forEach(dyrene => {
+                      let klon = dyrTemplate.cloneNode(true).content;
+                      klon.querySelector("h1").textContent = dyrene.navn;
+                      klon.querySelector("img").src = dyrene.billede;
+                      klon.querySelector("p").textContent = dyrene.type;
+                      klon.querySelector("p+p").textContent = dyrene.levested;
+                      container.appendChild(klon);
+
+                  })
+              }
+
+          }*/
+    </script>
+
+</body></html>
