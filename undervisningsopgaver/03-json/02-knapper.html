@@ -63,15 +63,22 @@
             text-align: center;
 
         }
+
+        .valgt {
+            color: white;
+            background-color: red;
+        }
+
+        ;
     </style>
 </head>
 
 <body>
     <header>
-        <button class="filter valgt" data-køn="alle" ´>Alle</button>
-        <button class="filter valgt" data-køn="m" ´>Mænd</button>
-        <button class="filter valgt" data-køn="k" ´>Kvinder</button>
-        <button class="filter valgt" data-køn="andet" ´>Andet</button>
+        <button class="filter valgt " data-køn="alle" ´>Alle</button>
+        <button class="filter  " data-køn="m" ´>Mænd</button>
+        <button class="filter " data-køn="k" ´>Kvinder</button>
+        <button class="filter " data-køn="andet" ´>Andet</button>
     </header>
 
     <section class="data-container"></section>
@@ -90,7 +97,7 @@
     <script>
         let dyrene;
 
-        const filter = "k";
+        let filter = "k";
 
 
         document.addEventListener("DOMContentLoaded", getJson);
@@ -108,6 +115,7 @@
             console.log("dyrene", dyrene);
 
             visDyr();
+            addEventListernersToButtons();
 
 
         }
@@ -118,10 +126,10 @@
             const container = document.querySelector(".data-container");
             const temp = document.querySelector("template");
 
-
+            container.innerHTML = "";
             dyrene.feed.entry.forEach((person) => {
 
-                if (person.gsx$køn.$t == filter) {
+                if (filter == "alle" || filter == person.gsx$køn.$t) {
                     const klon = temp.cloneNode(true).content;
                     klon.querySelector("h2").textContent = person.gsx$navn.$t;
                     klon.querySelector("img").src = person.gsx$billede.$t;
@@ -132,10 +140,26 @@
             })
 
 
+        }
+
+        function addEventListernersToButtons() {
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filtrering);
+            })
+        }
+
+        function filtrering() {
+
+            document.querySelectorAll("button").forEach(elm => {
+                elm.classList.remove("valgt");
+            })
 
 
+            this.classList.add("valgt");
 
 
+            filter = this.dataset.køn;
+            visDyr();
         }
 
 
