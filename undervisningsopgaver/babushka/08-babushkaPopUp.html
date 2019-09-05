@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Signika:700|Work+Sans:300&display=swap" rel="stylesheet">
     <title>Babuska</title>
 
     <style>
@@ -42,12 +44,12 @@
 
         article:nth-child(even) {
 
-            background: #edcfcf;
+            background: #fffbfb;
         }
 
         article:nth-child(odd) {
 
-            background: #b3b2b9;
+            background: #e0dfe3;
         }
 
 
@@ -58,10 +60,7 @@
 
         }
 
-        .valgt {
-            color: white;
-            background-color: red;
-        }
+
 
         #popUp {
             position: fixed;
@@ -106,29 +105,95 @@
 
 
         nav {
-            border-top: 2px solid black;
-            border-bottom: 2px solid black;
-            background-color: rgba(134, 127, 127, 0.47);
+
+
+
+            display: inline-block;
+
+            align-content: space-between;
         }
 
-        button {}
+        button {
+            min-width: 50px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+            padding: 5px;
+            border-radius: 10%;
+            border-bottom-style: groove;
+            background: rgba(250, 255, 231, 0);
+            border-color: rgba(240, 248, 255, 0);
+            font-size: 10px;
+            color: black;
+
+        }
 
         .babushka {
-            color: white;
-            font-size: 50px;
-            font-stretch: expanded;
+            color: #ffffff;
+            font-size: 70px;
+            padding-top: 7vh;
+            padding-bottom: 3vh;
+            border-bottom: 4px solid white;
+            font-family: 'Signika', sans-serif;
+            box-shadow: 0px 0px 29px 4px rgba(0, 0, , 0.75);
+
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 3rem;
+
+            font-family: 'Signika', sans-serif;
+            box-shadow: 0px 0px 29px 4px rgba(0, 0, , 0.75);
+            margin: 0 auto;
+        }
+
+        .valgt {
+            color: black;
+            background-color: white;
+
+
         }
 
         @media screen and (min-width:600px) {
             .data-container {
                 grid-template-columns: repeat(2, 1fr);
+
+
             }
+
+            .babushka {
+                font-size: 10rem;
+            }
+
+
+
+            nav button {
+                min-width: 100px;
+                margin: 0 auto;
+                font-size: 15px;
+                margin-left: 8px;
+                margin-right: 8px;
+                color: white;
+            }
+
         }
+
 
         @media screen and (min-width:960px) {
             .data-container {
                 grid-template-columns: repeat(3, 1fr);
             }
+
+
+            nav button {
+                min-width: 150px;
+                margin: 0 auto;
+                font-size: 33px;
+                margin-left: 20px;
+                margin-right: 20px;
+                color: white;
+            }
+
         }
     </style>
 </head>
@@ -139,7 +204,9 @@
             <img src="imgs/bistro/indian-resturant.jpg" alt="bistro">
         </div>
 
-        <div class="babushka">Bistro Babushka Halleluja</div>
+        <div class="babushka">
+            <h1>Bistro Babushka Halleluja</h1>
+        </div>
         <nav>
             <button class="filter valgt" data-kategori="alle" ´>Alle</button>
             <button class="filter " data-kategori="forretter" ´>Forretter</button>
@@ -152,14 +219,17 @@
 
     <div id="popUp">
         <button class="luk">X</button>
-        <section class="indhold">
-            <article class="enkeltRet">
-                <img class="billede" src="" alt="">
-                <h2></h2>
-                <p class="pris"></p>
-                <p class="lang"></p>
-            </article>
-        </section>
+
+        <div class="lukPopUp">
+            <section class="indhold">
+                <article class="enkeltRet">
+                    <img class="billede" src="" alt="">
+                    <h2></h2>
+                    <p class="pris"></p>
+                    <p class="lang"></p>
+                </article>
+            </section>
+        </div>
     </div>
     <section class="data-container"></section>
     <template>
@@ -206,7 +276,7 @@
                     klon.querySelector("h2").textContent = ret.gsx$navn.$t;
                     klon.querySelector("img").src = `imgs/small/${ret.gsx$billede.$t}-sm.jpg`;
                     klon.querySelector("img").alt = ret.gsx$billede.$t;
-                    klon.querySelector(".pris").textContent = `Pris: ${ret.gsx$pris.$t} kr.- `;
+                    klon.querySelector(".pris").textContent = `Pris: ${ret.gsx$pris.$t}.- `;
                     klon.querySelector(".kort").textContent = ret.gsx$kort.$t;
 
                     container.appendChild(klon);
@@ -238,12 +308,17 @@
 
             document.querySelector("#popUp").style.display = "block";
             document.querySelector("#popUp .luk").addEventListener("click", lukSingle);
+            document.querySelector("#popUp .lukPopUp").addEventListener("click", lukSingle);
 
             document.querySelector(".enkeltRet h2").textContent = ret.gsx$navn.$t;
             document.querySelector(".enkeltRet .billede").src = `imgs/small/${ret.gsx$billede.$t}-sm.jpg`;
             document.querySelector(".enkeltRet .billede").alt = ret.gsx$navn.$t;
-            document.querySelector(".pris").textContent = `Pris: ${ret.gsx$pris.$t} kr.- `;
+            document.querySelector(".pris").textContent = `Pris: ${ret.gsx$pris.$t}.- `;
             document.querySelector(".lang").textContent = ret.gsx$lang.$t;
+        }
+
+        function lukSingle() {
+            document.querySelector("#popUp").style.display = "none";
         }
 
         function lukSingle() {

@@ -16,7 +16,7 @@
 
         img {
             width: 100%;
-            max-height: 200px;
+
 
         }
 
@@ -30,7 +30,7 @@
         }
 
         article {
-            border: 1px solid rgba(85, 85, 85, 0.42);
+            border: 1px solid rgba(39, 3, 3, 0.42);
 
         }
 
@@ -42,44 +42,43 @@
 
         article:nth-child(even) {
 
-            background: #edcfcf;
+            background: #fffbfb;
         }
 
         article:nth-child(odd) {
 
-            background: #b3b2b9;
+            background: #e0dfe3;
         }
 
 
         header {
-            width: 100vw;
-            height: 200px;
-            background-color: red;
+
+
             text-align: center;
 
         }
 
-        .valgt {
-            color: white;
-            background-color: red;
-        }
+
 
         #popUp {
             position: fixed;
             width: 100vw;
             height: 100vh;
             top: 0;
-            background: rgba(65, 65, 65, 0.77);
+            background: rgba(180, 173, 173, 0.77);
             display: none;
+            text-align: center;
 
         }
 
-        #popUp img {
-            max-width: 200px;
+        #popUp .billede {
+            width: 50%;
+
+
         }
 
         .indhold {
-            width: 70vw;
+            width: 60vw;
             min-height: 50vh;
             background: #fff;
             margin: 4rem auto;
@@ -97,22 +96,115 @@
             display: none;
         }
 
+        .bistro {
+            position: fixed;
+            z-index: -1;
+        }
+
+
+        nav {
+
+
+
+            display: inline-block;
+
+            align-content: space-between;
+        }
+
+        button {
+            min-width: 150px;
+            margin-bottom: 25px;
+            margin-top: 25px;
+            padding: 10px;
+            border-radius: 10%;
+            border-bottom-style: groove;
+            background: rgba(250, 255, 231, 0);
+            border-color: rgba(240, 248, 255, 0);
+            font-size: 33px;
+            color: white;
+
+        }
+
+        .babushka {
+            color: #ffffff;
+            font-size: 70px;
+            padding-top: 7vh;
+            padding-bottom: 3vh;
+            border-bottom: 4px solid white;
+            font-family: 'Signika', sans-serif;
+            box-shadow: 0px 0px 29px 4px rgba(0, 0, , 0.75);
+
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 70px;
+
+            font-family: 'Signika', sans-serif;
+            box-shadow: 0px 0px 29px 4px rgba(0, 0, , 0.75);
+        }
+
+        .valgt {
+            color: black;
+            background-color: white;
+
+
+        }
+
         @media screen and (min-width:600px) {
             .data-container {
                 grid-template-columns: repeat(2, 1fr);
+
+
             }
+
+            .babushka {
+                font-size: 10rem;
+            }
+
+
+
+            nav button {
+                min-width: 100px;
+                margin: 0 auto;
+                font-size: 15px;
+                margin-left: 8px;
+                margin-right: 8px;
+                color: white;
+            }
+
         }
+
 
         @media screen and (min-width:960px) {
             .data-container {
                 grid-template-columns: repeat(3, 1fr);
             }
+
+
+            nav button {
+                min-width: 150px;
+                margin: 0 auto;
+                font-size: 33px;
+                margin-left: 20px;
+                margin-right: 20px;
+                color: white;
+            }
+
         }
     </style>
 </head>
 
 <body>
     <header>
+
+        <div class="bistro">
+            <img src="imgs/bistro/indian-resturant.jpg" alt="bistro">
+        </div>
+
+        <div class="babushka">
+            <h1>Bistro Babushka Halleluja</h1>
+        </div>
         <nav>
             <button class="filter valgt" data-kategori="alle" ´>Alle</button>
             <button class="filter " data-kategori="forretter" ´>Forretter</button>
@@ -123,6 +215,17 @@
     </header>
 
 
+    <div id="popUp">
+        <button class="luk">X</button>
+        <section class="indhold">
+            <article class="enkeltRet">
+                <img class="billede" src="" alt="">
+                <h2></h2>
+                <p class="pris"></p>
+                <p class="kort"></p>
+            </article>
+        </section>
+    </div>
     <section class="data-container"></section>
     <template>
         <article>
