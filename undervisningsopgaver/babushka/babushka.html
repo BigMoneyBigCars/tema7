@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <style>
+        img {
+            width: 30%;
+            max-height: 200px;
+
+        }
+
+        .data-container {
+            text-align: center;
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: repeat(1, 1fr);
+            margin: 0 auto;
+            max-width: 1080px;
+
+
+        }
+
+        article {
+            border: 1px solid rgba(85, 85, 85, 0.42);
+
+        }
+
+        a {
+            color: black;
+            font-size: 20px;
+        }
+
+
+        article:nth-child(even) {
+
+            background: #edcfcf;
+        }
+
+        article:nth-child(odd) {
+
+            background: #b3b2b9;
+        }
+
+
+        header {
+            text-align: center;
+
+        }
+
+        .valgt {
+            color: white;
+            background-color: red;
+        }
+
+        #popUp {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            background: rgba(65, 65, 65, 0.77);
+            display: none;
+
+        }
+
+
+        .indhold {
+            width: 70vw;
+            min-height: 50vh;
+            background: #fff;
+            margin: 4rem auto;
+            padding: 10px;
+        }
+
+
+        .luk {
+            position: fixed;
+            right: 0;
+            font-size: 2rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media screen and (min-width:600px) {
+            .data-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+
+        }
+
+        @media screen and (min-width:960px) {
+            .data-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Alle</h1>
+        <nav class="menu">
+
+            <h2>Køn</h2>
+            <button class="filter valgt " data-køn="alle" data-hold="alle">Alle</button>
+            <button class="filter  " data-køn="m" data-hold="alle">Forretter</button>
+            <button class="filter " data-køn="k" data-hold="alle">Hovedretter</button>
+            <button class="filter " data-køn="andet" data-hold="alle">Desserter</button>
+            <button class="filter " data-køn="andet" data-hold="alle">Drikkevarer</button>
+
+
+
+        </nav>
+    </header>
+
+
+    <div id="popUp">
+
+        <button class="luk">X</button>
+        <section class="indhold">
+            <article class="enkeltPerson">
+                <h2></h2>
+                <img class="billede" src="" alt="">
+                <p> Github: <a class="github" href=""></a></p>
+
+            </article>
+
+
+        </section>
+
+    </div>
+
+
+
+    <section class="container"></section>
+    <template>
+
+        <article>
+
+            <p class="data-overskrift"></p>
+            <img class="ret-billede" src="" alt="">
+            <h2 class="ret-navn"></h2>
+
+            <p class="ret-kort"></p>
+            <p class="ret-pris"></p>
+        </article>
+
+
+    </template>
+
+
+    <script>
+        let retter;
+        document.addEventListener("DOMContentLoaded", getJson);
+        async function getJson() {
+            //henter json
+            let jsonData = await fetch("https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json");
+
+            console.log(jsonData)
+            retter = await jsonData.json();
+            console.log(retter)
+            visRetter(retter, "Menu");
+
+            let forretter = retter.filter(ret => ret.gsx$kategori.$t == "forretter");
+            let hovedretter = retter.filter(ret => ret.gsx$kategori.$t == "hovedretter");
+            let desserter = retter.filter(ret => ret.gsx$kategori.$t == "desserter");
+            let drikkevarer = retter.filter(ret => ret.gsx$kategori.$t == "drikkevarer");
+
+            document.querySelector("#sorter-alle").addEventListener("click", () => {
+                console.log(retter);
+
+                visRetter(retter, "Menu");
+            });
+
+            document.querySelector("#sorter-forretter").addEventListener("click", () => {
+                console.log(forretter);
+                visRetter(forretter, "Forretter");
+            });
+            document.querySelector("#sorter-hovedretter").addEventListener("click", () => {
+                visRetter(hovedretter, "Hovedretter");
+            });
+            document.querySelector("#sorter-desserter").addEventListener("click", () => {
+                visRetter(desserter, "Desserter");
+            });
+            document.querySelector("#sorter-drikkevarer").addEventListener("click", () => {
+                visRetter(drikkevarer, "Drikkevarer");
+            });
+
+
+        }
+
+        function visRetter(visRet, overskrift) {
+            let menuTemplate = document.querySelector("template");
+            let templateContainer = document.querySelector(".container");
+            templateContainer.innerHTML = "";
+
+            document.querySelector("data-overskrift").textContent = overskrift;
+
+            retAtvise.forEach(hverRet => {
+                let klon = menuTemplate.cloneNode(true).content;
+                klon.querySelector("ret-navn").textContent = hverRet.gsx$navn.$t;
+                klon.querySelector("ret-kort").textContent = hverRet.gsx$kort.$t;
+                klon.querySelector("ret-pris").textContent = hverRet.gsx$pris.$t;
+                klon.querySelector("ret-billede").src = `imgs / large / $ {hverRet.gsx$pris.$t}.jpg`;
+                klon.querySelector("ret-id").setAttribute("ret-id", hverRet.gsx$id.$t);
+                templateContainer.appendChild(klon);
+                templateContainer.lastElementChild.addEventListener("click", visSingle);
+            });
+        }
+
+        function visSingle() {
+            //console.log(vis single);
+            let my_id = this.getAttribute("ret-id");
+            let single = retter.find(ret => {
+                console.log(ret.gsx$id.$t);
+                if (my_id == ret.gsx$id.$t) {
+                    document.querySelector("#popup").style.visibility = "visible";
+                    document.querySelector("ret-titel").textContent = ret.navn;
+                    document.querySelector("ret-singleimg").setAttribute("src", "imgs/large/" + ret.gsx$billede.$t);
+                    document.querySelector("ret-beskrivelse").textContent = ret.langbeskrivelse;
+                }
+            });
+        }
+
+        /*  function toggleMenu() {
+              document.querySelector(".burger").classList.toggle("skift");
+              document.querySelector("nav").classList.toggle("vis");
+
+          }
+          document.querySelector(".burger").addEventListener("click", toggleMenu);
+          document.querySelector("nav").addEventListener("click", toggleMenu);
+
+
+
+
+
+
+
+
+
+          /*let retter;
+
+          let køn = "alle";
+
+          let hold = "begge";
+
+
+
+
+
+          document.addEventListener("DOMContentLoaded", getJson);
+
+          async function getJson() {
+
+              console.log("dom virker");
+
+              let jsonData = await fetch("https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json");
+
+              console.log("jsonData", jsonData);
+
+
+              let tempVar = await jsonData.json();
+
+              retter = tempVar.feed.entry;
+
+              visRetter(retter, "menu");
+
+              console.log("babushkaData", babushkaData);
+
+
+
+              let forretter = retter.filter(ret => ret.gsx$kategori.$t == "forretter");
+              let hovedretter = retter.filter(ret => ret.gsx$kategori.$t == "forretter");
+              let desserter = retter.filter(ret => ret.gsx$kategori.$t == "forretter");
+              let drikkevarer = retter.filter(ret => ret.gsx$kategori.$t == "forretter");
+
+              visMenu();
+
+              addEventListernersToKøn();
+              addEventListernersToHold();
+
+
+          }
+
+          /*
+
+                  function visMenu() {
+
+                      const container = document.querySelector(".data-container");
+                      const temp = document.querySelector("template");
+
+                      const article = document.querySelector(".enkeltperson");
+
+                      container.innerHTML = "";
+                      babushkaData.feed.entry.forEach((person) => {
+
+
+
+                          if (køn == "alle" && hold == "begge" || køn == person.gsx$køn.$t && hold == person.gsx$hold.$t ||
+                              køn == "alle" && hold == person.gsx$hold.$t || hold == "begge" && køn == person.gsx$køn.$t
+
+                          ) {
+                              const klon = temp.cloneNode(true).content;
+                              klon.querySelector("h2").textContent = person.gsx$navn.$t;
+                              klon.querySelector("img").src = person.gsx$billede.$t;
+                              klon.querySelector(".gitHub").textContent = person.gsx$github.$t;
+                              klon.querySelector(".gitHub").href = `https://www.github.com/${person.gsx$github.$t}`;
+                              container.appendChild(klon);
+
+                              container.lastElementChild.addEventListener("click", () => {
+                                  visSingle(person)
+                              });
+                          }
+                      })
+
+                  }
+
+                  function addEventListernersToKøn() {
+                      document.querySelectorAll(".filter").forEach(elm => {
+                          elm.addEventListener("click", filtreringKøn);
+                      })
+                  }
+
+
+
+
+                  function visSingle(person) {
+
+                      document.querySelector("#popUp").style.display = "block";
+
+
+
+                      document.querySelector("#popUp .luk").addEventListener("click", lukSingle);
+
+                      document.querySelector(".enkeltPerson h2").textContent = person.gsx$navn.$t;
+                      document.querySelector(".enkeltPerson .billede").src = person.gsx$billede.$t;
+                      document.querySelector(".enkeltPerson .billede").alt = person.gsx$navn.$t;
+                      document.querySelector(".enkeltPerson .github").href = `https://www.github.com/${person.gsx$github.$t}`;
+                      document.querySelector(".enkeltPerson .github").textContent = `https://www.github.com/${person.gsx$github.$t}`;
+                      document.querySelector(".enkeltPerson .historie").textContent = person.gsx$historie.$t;
+
+
+
+                  }
+
+                  function lukSingle() {
+                      document.querySelector("#popUp").style.display = "none";
+                  }
+
+
+
+                  function filtreringKøn() {
+
+                      document.querySelectorAll(".filter").forEach(elm => {
+                          elm.classList.remove("valgt");
+                      })
+
+                      if (this.dataset.køn == "alle") {
+                          document.querySelector(".filterHold").classList.remove("valgt");
+                          document.querySelector(".filter").classList.remove("valgt");
+
+
+                          hold = "begge";
+                          køn = "alle";
+                      }
+
+
+                      this.classList.add("valgt");
+
+                      document.querySelector("h1").textContent = this.textContent;
+
+
+
+                      køn = this.dataset.køn;
+
+
+                      visMenu();
+                  }
+
+
+
+                  function addEventListernersToHold() {
+                      document.querySelectorAll(".filterHold").forEach(elm => {
+                          elm.addEventListener("click", filtreringHold);
+                      })
+                  }
+
+
+
+                  function filtreringHold() {
+
+                      document.querySelectorAll(".filterHold").forEach(elm => {
+                          elm.classList.remove("valgt");
+                      })
+
+                      this.classList.add("valgt");
+
+                      document.querySelector("h1").textContent = this.textContent;
+
+
+
+                      hold = this.dataset.hold;
+
+
+                      visMenu();
+                  }
+
+
+          */
+
+
+
+
+
+
+
+        /*  function start() {
+              console.log("Dom er loaded");
+
+              async function hentJson() {
+                  let myJson = await fetch("dyr.json");
+                  dyr = await myJson.json();
+                  visMenu();
+              }
+
+
+              function visMenu() {
+
+                  const container = document.querySelector(".data-container");
+                  const dyrTemplate = document.querySelector("template");
+
+                  dyr.forEach(dyrene => {
+                      let klon = dyrTemplate.cloneNode(true).content;
+                      klon.querySelector("h1").textContent = dyrene.navn;
+                      klon.querySelector("img").src = dyrene.billede;
+                      klon.querySelector("p").textContent = dyrene.type;
+                      klon.querySelector("p+p").textContent = dyrene.levested;
+                      container.appendChild(klon);
+
+                  })
+              }
+
+          }*/
+    </script>
+
+</body></html>

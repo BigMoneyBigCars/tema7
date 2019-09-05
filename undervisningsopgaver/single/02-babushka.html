@@ -24,7 +24,7 @@
         }
 
         article {
-            border: 1px solid #8d8c8c;
+            border: 1px solid rgba(85, 85, 85, 0.42);
 
         }
 
@@ -44,6 +44,46 @@
             background: #b3b2b9;
         }
 
+
+        header {
+            text-align: center;
+
+        }
+
+        .valgt {
+            color: white;
+            background-color: red;
+        }
+
+        #popUp {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            background: rgba(65, 65, 65, 0.77);
+            display: none;
+        }
+
+
+        .indhold {
+            width: 70vw;
+            min-height: 50vh;
+            background: #fff;
+            margin: 4rem auto;
+            padding: 10px;
+        }
+
+
+        .luk {
+            position: fixed;
+            right: 0;
+            font-size: 2rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
         @media screen and (min-width:600px) {
             .data-container {
                 grid-template-columns: repeat(2, 1fr);
@@ -58,16 +98,6 @@
             }
 
 
-        }
-
-        header {
-            text-align: center;
-
-        }
-
-        .valgt {
-            color: white;
-            background-color: red;
         }
     </style>
 </head>
@@ -93,6 +123,22 @@
     </header>
 
     <section class="data-container"></section>
+    <div id="popUp">
+
+        <button class="luk">X</button>
+        <section class="indhold">
+            <article class="enkeltPerson">
+                <h2></h2>
+                <img class="billede" src="" alt="">
+                <p> Github: <a class="github" href=""></a></p>
+
+            </article>
+        </section>
+
+
+
+
+    </div>
     <template>
 
         <article>
@@ -108,11 +154,7 @@
     <script>
         let dyrene;
 
-        let køn = "alle";
-
-        let hold = "begge";
-
-
+        let filter = "k";
 
         document.addEventListener("DOMContentLoaded", getJson);
 
@@ -141,22 +183,24 @@
 
             const container = document.querySelector(".data-container");
             const temp = document.querySelector("template");
+            const article = document.querySelector(".enkeltperson");
 
             container.innerHTML = "";
             dyrene.feed.entry.forEach((person) => {
 
 
 
-                if (køn == "alle" && hold == "begge" || køn == person.gsx$køn.$t && hold == person.gsx$hold.$t ||
-                    køn == "alle" && hold == person.gsx$hold.$t || hold == "begge" && køn == person.gsx$køn.$t
-
-                ) {
+                if (filter == "alle" || filter == person.gsx$kategori.$t) {
                     const klon = temp.cloneNode(true).content;
                     klon.querySelector("h2").textContent = person.gsx$navn.$t;
-                    klon.querySelector("img").src = person.gsx$billede.$t;
-                    klon.querySelector(".gitHub").textContent = person.gsx$github.$t;
-                    klon.querySelector(".gitHub").href = `https://www.github.com/${person.gsx$github.$t}`;
+                    klon.querySelector("img").src = `imgs/large/${person.gsx$billede.$t}.jpg`;
+                    klon.querySelector(".gitHub").textContent = person.gsx$kategori.$t;
+
                     container.appendChild(klon);
+
+                    container.lastElementChild.addEventListener("click", () => {
+                        visSingle(person)
+                    });
                 }
             })
 
@@ -166,6 +210,32 @@
             document.querySelectorAll(".filter").forEach(elm => {
                 elm.addEventListener("click", filtreringKøn);
             })
+        }
+
+
+
+
+        function visSingle(person) {
+
+            document.querySelector("#popUp").style.display = "block";
+
+
+
+            document.querySelector("#popUp .luk").addEventListener("click", lukSingle);
+
+            document.querySelector(".enkeltPerson h2").textContent = person.gsx$navn.$t;
+            document.querySelector(".enkeltPerson .billede").src = person.gsx$billede.$t;
+            document.querySelector(".enkeltPerson .billede").alt = person.gsx$navn.$t;
+            document.querySelector(".enkeltPerson .github").href = `https://www.github.com/${person.gsx$github.$t}`;
+            document.querySelector(".enkeltPerson .github").textContent = `https://www.github.com/${person.gsx$github.$t}`;
+            document.querySelector(".enkeltPerson .historie").textContent = person.gsx$historie.$t;
+
+
+
+        }
+
+        function lukSingle() {
+            document.querySelector("#popUp").style.display = "none";
         }
 
 

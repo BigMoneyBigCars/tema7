@@ -64,7 +64,7 @@
 
 
     <script>
-        let dyrene;
+        let retter;
 
         document.addEventListener("DOMContentLoaded", getJson);
 
@@ -72,32 +72,32 @@
 
             console.log("Dom Virker flot");
 
-            let jsonData = await fetch("dyr.json");
+            let jsonData = await fetch("https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json");
 
             console.log("jsonData", jsonData);
 
-            dyrene = await jsonData.json();
+            retter = await jsonData.json();
 
-            console.log("dyrene", dyrene);
+            console.log("retter", retter);
 
-            visDyr();
+            visMenu();
 
 
         }
 
 
-        function visDyr() {
+        function visMenu() {
 
             const container = document.querySelector(".data-container");
             const temp = document.querySelector("template");
 
 
-            dyrene.forEach(dyr => {
+            retter.forEach(ret => {
                 const klon = temp.cloneNode(true).content;
-                klon.querySelector("h1").textContent = dyr.navn;
-                klon.querySelector("img").src = dyr.billede;
-                klon.querySelector("p").textContent = dyr.type;
-                klon.querySelector("p+p").textContent = dyr.levested;
+                klon.querySelector("h1").textContent = ret.navn;
+                klon.querySelector("img").src = ret.billede;
+                klon.querySelector("p").textContent = ret.type;
+                klon.querySelector("p+p").textContent = ret.levested;
                 container.appendChild(klon);
             })
         }

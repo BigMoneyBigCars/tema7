@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <style>
+        img {
+            width: 50%;
+            max-height: 1000px;
+
+        }
+
+        .data-container {
+            text-align: center;
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: repeat(1, 1fr);
+            margin: 0 auto;
+            max-width: 1080px;
+
+
+        }
+
+        article {
+            border: 1px solid rgba(85, 85, 85, 0.42);
+
+        }
+
+        a {
+            color: black;
+            font-size: 20px;
+        }
+
+
+        article:nth-child(even) {
+
+            background: #edcfcf;
+        }
+
+        article:nth-child(odd) {
+
+            background: #b3b2b9;
+        }
+
+
+        header {
+            text-align: center;
+
+        }
+
+        .valgt {
+            color: white;
+            background-color: red;
+        }
+
+        /*  #popUp {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            background: rgba(65, 65, 65, 0.77);
+            display: none;
+        }*/
+
+
+        .indhold {
+            width: 70vw;
+            min-height: 50vh;
+            background: #fff;
+            margin: 4rem auto;
+            padding: 10px;
+        }
+
+
+        .luk {
+            position: fixed;
+            right: 0;
+            font-size: 2rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+
+        main {
+            text-align: center;
+        }
+
+        @media screen and (min-width:600px) {
+            .data-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+
+        }
+
+        @media screen and (min-width:960px) {
+            .data-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+
+        }
+
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <main id="single">
+        <button class="luk">Tilbage</button>
+        <section class="indhold">
+            <article class="enkeltRet">
+                <img class="billede" src="" alt="">
+                <h2></h2>
+                <p class="pris"></p>
+                <p class="lang"></p>
+            </article>
+
+        </section>
+    </main>
+
+    <script>
+        let urlParams = new URLSearchParams(window.location.search)
+
+        let kategori = urlParams.get("kategori");
+
+        console.log("github er logget", kategori);
+
+        let retter;
+
+
+
+
+        document.addEventListener("DOMContentLoaded", getJson);
+        console.log("dom er loaded");
+
+        async function getJson() {
+
+            let jsonData = await fetch("https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json");
+            console.log("jsonData", jsonData);
+
+            retter = await jsonData.json();
+
+            console.log("retter", retter);
+            visRet();
+
+        }
+
+
+        function visRet() {
+
+            retter.feed.entry.forEach((ret) => {
+
+                if (ret.gsx$kategori.$t == kategori) {
+
+
+                    document.querySelector("h2").textContent = retter.gsx$navn.$t;
+                    document.querySelector(".billede").src = retter.gsx$billede.$t;
+                    document.querySelector(".billede").alt = retter.gsx$billede.$t;
+
+                    document.querySelector(".historie").href = person.gsx$historie.$t;
+
+                };
+
+            })
+
+        }
+
+        document.querySelector(".luk").addEventListener("click", () => {
+
+            history.back();
+        })
+
+    </script>
+
+</body>
+
+</html>

@@ -44,6 +44,41 @@
             background: #b3b2b9;
         }
 
+
+        header {
+            text-align: center;
+
+        }
+
+        .valgt {
+            color: white;
+            background-color: red;
+        }
+
+        #popUp {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            background: rgba(65, 65, 65, 0.77);
+        }
+
+
+        .indhold {
+            width: 70vw;
+            min-height: 50vh;
+            background: #fff;
+            margin: 4rem auto;
+            padding: 10px;
+        }
+
+
+        .luk {
+            position: fixed;
+            right: 0;
+            font-size: 2rem;
+        }
+
         @media screen and (min-width:600px) {
             .data-container {
                 grid-template-columns: repeat(2, 1fr);
@@ -60,15 +95,6 @@
 
         }
 
-        header {
-            text-align: center;
-
-        }
-
-        .valgt {
-            color: white;
-            background-color: red;
-        }
     </style>
 </head>
 
@@ -93,6 +119,24 @@
     </header>
 
     <section class="data-container"></section>
+    <div id="popUp">
+
+        <button class="luk">X</button>
+        <section class="indhold">
+            <article class="enkeltperson">
+                <h2></h2>
+                <img class="billede" src="" alt="">
+                <p> Github: <a class="github" href=""></a></p>
+
+            </article>
+
+
+        </section>
+
+
+
+
+    </div>
     <template>
 
         <article>
@@ -261,6 +305,9 @@
               }
 
           }*/
+
     </script>
 
-</body></html>
+</body>
+
+</html>
